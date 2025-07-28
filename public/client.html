@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Crypto Crash Client</title></head>
+<body>
+  <h2>Crypto Crash Game - WebSocket Client</h2>
+  <pre id="log"></pre>
+  <script>
+    const log = document.getElementById('log');
+    const socket = new WebSocket("ws://localhost:5000");
+
+    socket.onmessage = (event) => {
+      const msg = JSON.parse(event.data);
+      log.innerText += JSON.stringify(msg) + "\\n";
+    };
+
+    setTimeout(() => {
+      socket.send(JSON.stringify({ type: "cashout", userId: "123", roundId: "r1", multiplier: 2 }));
+    }, 5000);
+  </script>
+</body>
+</html>

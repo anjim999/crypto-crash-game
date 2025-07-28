@@ -1,0 +1,36 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0f172a;
+  color: #f1f5f9;
+  text-align: center;
+  padding: 40px;
+}
+
+h1 {
+  color: #38bdf8;
+}
+
+#multiplier {
+  font-size: 3rem;
+  margin: 20px 0;
+}
+
+#crash-status {
+  color: #f87171;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: #10b981;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+button:hover {
+  background-color: #059669;
+}

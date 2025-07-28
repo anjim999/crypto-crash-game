@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crypto Crash Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Crypto Crash Game</h1>
+  <div id="multiplier">Multiplier: 1.00x</div>
+  <div id="crash-status"></div>
+  <button onclick="cashOut()">Cash Out</button>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+const socket = io('https://crypto-crash-game-1-e9e1.onrender.com');
+
+    const multiplierDiv = document.getElementById('multiplier');
+    const crashStatus = document.getElementById('crash-status');
+    let currentMultiplier = 1;
+
+    socket.on('multiplierUpdate', (data) => {
+      currentMultiplier = data.multiplier;
+      multiplierDiv.textContent = `Multiplier: ${currentMultiplier.toFixed(2)}x`;
+      crashStatus.textContent = '';
+    });
+
+    socket.on('roundCrash', (data) => {
+      crashStatus.textContent = `Crashed at ${data.crashPoint.toFixed(2)}x`;
+    });
+
+    socket.on('playerCashout', (data) => {
+      alert(`Player ${data.userId} cashed out: ${data.usdPayout.toFixed(2)} USD`);
+    });
+
+    function cashOut() {
+      const userId = prompt("Enter your userId:");
+      const multiplier = currentMultiplier;
+      const roundId = prompt("Enter roundId (you can get this from API response):");
+
+      socket.emit('cashout', {
+        userId,
+        multiplier,
+        roundId
+      });
+    }
+  </script>
+</body>
+</html>
